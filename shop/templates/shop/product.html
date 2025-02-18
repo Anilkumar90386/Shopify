@@ -1,0 +1,127 @@
+{% extends 'shop/basic.html' %}
+{% block body %}
+<br><br><br><br>
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-6 text-center">
+      <img src="/media/{{product.image}}" class="img-fluid" alt="{{ product.product_name }}"
+        style="max-width:33vh; height: auto;">
+    </div>
+
+    <div class="col-md-6" style="padding-right: 20px;">
+      <br>
+      <h3>{{ product.product_name }}</h3>
+      <p class="text-muted">Product Description</p>
+      <p><strong>Price: Rs. <span id="Productprice">{{ product.price }}</span></strong></p>
+        <p class="text-muted"><strong>Offer : </strong><span id="strike">{{product.Offer}}%</span></p>
+      <p>{{ product.desc }}</p>
+
+      <div class="mt-2">
+        <p><strong>Rating:</strong></p>
+        <div class="stars">
+          <span class="text-muted">4.4</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-success">Buy Now</button>
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Offer Cost
+      </button>
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel"><strong>Calculating the Cost</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p class="text-muted">Price of the Product - Rs.{{product.price}}</p>
+              <p class="text-muted">Percentage of the Offer  -  {{product.Offer}} %</p>
+            </div>
+            <div>
+              <p style="margin-left:0.9em" class="text-muted">Total cost <span style="margin-left:13vh" id="cost">Rs</span></p>
+            </div>
+            <div class="modal-footer">
+              
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="Clicked">Close</button>
+              <button type="button" class="btn btn-success" id="submitbutton">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+{% block js %}
+<script>
+  const price = {{ product.price }};
+  const offer={{product.Offer}};
+  const Reduction=price/offer;
+  const totalcost=Math.round(price-Reduction);
+  
+  if(totalcost=='-Infinity'){
+    
+    document.getElementById('cost').innerHTML=`Rs. ${price}`; 
+  }
+  else{
+    document.getElementById('cost').innerHTML=`Rs. ${totalcost}`;
+  }
+ 
+  var Click=document.getElementById('Clicked');
+  Click.addEventListener("click",function(event){
+    event.preventDefault();
+    var offer={{product.Offer}};
+    if(totalcost=="-Infinity"){
+      document.getElementById("Productprice").innerHTML=`${price}`;
+    }
+    else{
+      document.getElementById("Productprice").innerHTML=`${totalcost}`;
+    }
+    document.getElementById('strike').innerHTML=`<span style="text-decoration:line-through">${offer} %</span>`;
+  })
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  }
+
+  document.querySelectorAll('.cart').forEach(button => {
+    button.addEventListener('click', function () {
+      console.log('Clicked');
+      idstr = this.id.toString();
+      console.log(idstr);
+      if (cart[idstr] !== undefined) {
+        cart[idstr] = cart[idstr] + 1;
+      } else {
+        cart[idstr] = 1;
+      }
+      console.log(cart);
+      localStorage.setItem('cart', JSON.stringify(cart));
+    });
+  });
+  const stars = document.querySelectorAll('.star');
+  const rating = 4;
+  for (let i = 0; i < stars.length; i++) {
+    if (i < rating) {
+      stars[i].style.color = 'green';
+    } else {
+      stars[i].style.backgroundColor = '#90ee90';
+      stars[i].style.color = 'lightgray';
+    }
+  }
+ 
+</script>
+{% endblock %}

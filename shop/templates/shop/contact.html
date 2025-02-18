@@ -1,0 +1,27 @@
+{%extends 'shop/basic.html'%}
+{%block body%}
+<div class="container">
+    <h3 class="mt-6" style="margin-left:54vh;margin-top:10vh">Contact Us</h3>
+    <form action="/shop/contact/" method="post" class="p-4 border rounded shadow-sm" style="max-width: 500px; margin: auto;">{% csrf_token %}
+        <div class="mb-4">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control form-control-xl" id="name" name="name">
+        </div>
+        <div class="mb-4">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control form-control-xl" id="email" name="email">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>   
+        <div class="mb-4">
+            <label for="phone" class="form-label">Phone No.</label>
+            <input type="tel" class="form-control form-control-xl" id="phone" name="phone">
+        </div>
+        <div class="mb-4">
+            <label for="message" class="form-label">How can we help you?</label>
+            <textarea class="form-control form-control-xl" id="message" rows="3" name="message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success btn-xl w-100" >Submit</button> 
+        
+    </form>
+</div>
+{%endblock%}
