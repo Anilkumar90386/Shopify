@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . models import Product,Contact,Order
+from . models import Product,Contact,Order,Buy
 from math import ceil
 # Create your views here.
 from django.http import HttpResponse
@@ -68,3 +68,9 @@ def checkout(request):
 def productview(request,myid):
     product=Product.objects.filter(id=myid)
     return render(request,'shop/product.html',{'product':product[0]})
+
+def Buying(request):
+    buy_price=request.GET.get("product_price")
+    print(buy_price)
+    return render(request,'shop/product_price.html')
+

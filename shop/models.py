@@ -36,3 +36,6 @@ class UpdateOrder(models.Model):
 
     def __str__(self):
         return self.update_desc[0:7]+"....."
+
+class Buy(models.Model):
+    buy_price=models.IntegerField(default=0)

@@ -13,7 +13,9 @@
       <br>
       <h3>{{ product.product_name }}</h3>
       <p class="text-muted">Product Description</p>
-      <p><strong>Price: Rs. <span id="Productprice">{{ product.price }}</span></strong></p>
+      <form method="post" action="">
+        <p name="product_price"><strong>Price: Rs. <span id="Productprice">{{ product.price }}</span></strong></p>
+      </form>
         <p class="text-muted"><strong>Offer : </strong><span id="strike">{{product.Offer}}%</span></p>
       <p>{{ product.desc }}</p>
 
@@ -29,11 +31,11 @@
         </div>
       </div>
       <br>
-      <button class="btn btn-success">Buy Now</button>
+      <a href="/shop/buying"><button class="btn btn-success">Buy Now</button></a>
       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Offer Cost
       </button>
-
+      
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
